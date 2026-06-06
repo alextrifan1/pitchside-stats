@@ -24,5 +24,17 @@ services:
     depends_on:
       - db
 
+  frontend:
+    build: ./frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    environment:
+      - CHOKIDAR_USEPOLLING=true # Helps hot-reloading work perfectly in Windows/WSL
+    depends_on:
+      - backend
+
 volumes:
   mongo_data:
