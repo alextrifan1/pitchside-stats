@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setCredentials } from '../store/authSlice';
 
@@ -79,6 +79,13 @@ export const Login = () => {
                         Sign In
                     </button>
                 </form>
+
+                <p className="text-center text-sm text-gray-500 mt-6">
+                    Don't have an account?{' '}
+                    <Link to="/register" className="text-amber-500 font-semibold hover:text-amber-600 transition-colors">
+                        Sign up now
+                    </Link>
+                </p>
 
             </div>
         </div>

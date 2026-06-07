@@ -57,7 +57,7 @@ export class FootballService {
                 name: item.league.name,
                 country: item.league.country,
                 logo: item.league.logo,
-                curremtSeason: item.seasons[0].year
+                currentSeason: item.seasons[0].year
             }));
         } catch (error: any) {
             console.error("External API Error (/leagues):", error.message);
@@ -71,6 +71,8 @@ export class FootballService {
                 headers: this.getHeaders(),
                 params: { league: leagueId, season: season}
             });
+
+            console.log("RAW API RESPONSE:", JSON.stringify(response.data, null, 2));
 
             const standingsData = response.data.response[0]?.league?.standings[0];
             if (!standingsData) {
@@ -86,7 +88,7 @@ export class FootballService {
                 isChampion: teamRank.rank === 1 // will use for quiz logic
             }));
         } catch (error: any) {
-            console.error("External API Error (/standings):", error.message);
+            console.error("CRITICAL API ERROR:", error.response?.data || error.message);
             throw new Error("Failed to fetch standings");
         }
     }

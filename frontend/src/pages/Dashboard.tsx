@@ -17,6 +17,8 @@ export const Dashboard = () => {
 
     const navigate = useNavigate();
 
+    const VALID_LEAGUE_IDS = [39, 140, 78, 135, 61]; // Premier League, La Liga, Bundesliga, Serie A, Ligue 1
+
     useEffect(() => {
         const fetchLeagues = async () => {
             try {
@@ -44,7 +46,9 @@ export const Dashboard = () => {
 
             {!loading && !error && (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {leagues.map((league) => (
+                    {leagues
+                        .filter((league) => VALID_LEAGUE_IDS.includes(league.id))
+                        .map((league) => (
                         <div
                             key={league.id}
                             className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 flex flex-col justify-between h-48 hover:shadow-md transition-shadow"
@@ -58,7 +62,10 @@ export const Dashboard = () => {
                             </div>
 
                             <button
-                                onClick={() => navigate(`/quiz/${league.id}/${league.currentSeason}`)}
+                                onClick={() => {
+                                    const season = 2022; // free tier
+                                    navigate(`/quiz/${league.id}/${season}`);
+                                }}
                                 className="bg-black text-white px-4 py-2 rounded-md hover:bg-amber-400 hover:text-black font-semibold transition-colors mt-4"
                             >
                                 Enter Arena
